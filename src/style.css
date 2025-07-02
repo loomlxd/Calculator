@@ -1,7 +1,9 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+  --black-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --white-color: rgb(255, 255, 255);
+  --gray-color: rgb(170, 170, 170);
+  --light-red-color: rgb(221, 167, 167);
+  --background-site-color: #dddddd;
 }
 
 body {
@@ -9,13 +11,13 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #ddd;
+  background: var(--background-site-color);
 }
 
 .app {
-  background-color: rgb(170, 170, 170);
-  width: 500px;
-  height: 700px;
+  background-color: var(--gray-color);
+  max-width: 500px;
+  max-height: 700px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -26,7 +28,8 @@ body {
 .display {
   width: 100%;
   height: 100px;
-  background-color: rgb(255, 255, 255);
+  max-height: 100px;
+  background-color: var(--white-color);
   border-radius: 20px;
   text-align: right;
   padding: 20px;
@@ -68,44 +71,45 @@ body {
 .number,
 .sym {
   list-style: none;
-  width: 80px;
-  height: 80px;
-  background: white;
+  width: 100%;
+  height: 100%;
+  background: var(--white-color);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 30px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--black-box-shadow);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
+  border: none;
 }
 
 .equals {
   list-style: none;
-  height: 80px;
-  background: white;
+  background: var(--white-color);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 30px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--black-box-shadow);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
   width: 168px;
+  border: none;
 }
 
 .number:hover,
 .sym:hover,
 .equals:hover {
-  scale: 1.02;
+  transform: scale(1.02);
 }
 
 .number:active,
 .sym:active,
 .equals:active {
-  scale: 0.98;
+  transform: scale(0.98);
 }
 
 .other-btns {
@@ -117,17 +121,19 @@ body {
 
 .back-btn,
 .clear-btn {
-  width: 80px;
+  width: 17%;
   height: 50px;
-  background: rgb(255, 255, 255);
+  max-height: 50px;
+  background: var(--white-color);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 30px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--black-box-shadow);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
+  border: none;
 }
 
 .clear-btn.click {
@@ -164,16 +170,16 @@ body {
 
 .back-btn:hover,
 .clear-btn:hover {
-  scale: 1.02;
+  transform: scale(1.02);
 }
 
 .clear-btn {
-  background-color: rgb(221, 167, 167);
+  background-color: var(--light-red-color);
 }
 
 .back-btn:active,
 .clear-btn:active {
-  scale: 0.98;
+  transform: scale(0.98);
 }
 
 .arrow {
@@ -183,7 +189,7 @@ body {
 }
 
 .history-block {
-  background-color: white;
+  background-color: var(--white-color);
   width: 0px;
   height: 0px;
   overflow: hidden;
@@ -193,7 +199,8 @@ body {
   border-radius: 20px;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease,
+    opacity 0.3s ease, visibility 0.3s ease, overflow 0.3s ease;
   position: relative;
 }
 
@@ -205,8 +212,8 @@ body {
   cursor: pointer;
   border: none;
   padding: 5px;
-  background-color: rgb(221, 167, 167);
-  transition: all 0.2s ease;
+  background-color: var(--light-red-color);
+  transition: font-size 0.2s ease;
 }
 
 .clear-history-btn:active {
@@ -215,14 +222,16 @@ body {
 
 .history-block.active {
   width: 400px;
+  max-width: 400px;
   height: 200px;
+  max-height: 200px;
   opacity: 1;
   visibility: visible;
   overflow: auto;
 }
 
 .history-block::-webkit-scrollbar-track {
-  background: #eeeeee;
+  background: var(--white-color);
   border-radius: 10px;
   margin-top: 30px;
   margin-bottom: 30px;
@@ -233,7 +242,7 @@ body {
 }
 
 .history-block::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: var(--gray-color);
   border-radius: 10px;
   border: 2px solid transparent;
 }
@@ -248,15 +257,11 @@ body {
   width: 30px;
   height: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
   transform: rotate(0);
   margin-left: 5px;
 }
 
 .open-history.active {
   transform: rotate(180deg);
-}
-
-.open-history:hover {
-  scale: 1.05;
 }
