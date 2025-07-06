@@ -13,9 +13,9 @@ const state = {
   dotCount: 0,
 };
 
-localSto.upDateLocalStorageHistory();
+localSto.updateLocalStorageHistory();
 
-localSto.upDateHistory();
+updateHistory();
 
 refs.keyPads.addEventListener("click", onKeyPadsClick);
 
@@ -116,10 +116,10 @@ function calculateTotal() {
   }
 
   if (String(state.total).includes(".")) {
-    localSto.upDateHistoryBlockNotAWholeNumber(state.total);
+    localSto.updateHistoryBlockNumber(state.total.toFixed(2));
     refs.display.textContent = state.total.toFixed(2);
   } else {
-    localSto.upDateHistoryBlockWholeNumber(state.total);
+    localSto.updateHistoryBlockNumber(state.total);
     refs.display.textContent = state.total;
   }
 
@@ -185,7 +185,24 @@ function onOpenHistoryBtnClick(e) {
   refs.historyBlock.classList.toggle("active");
 }
 
-refs.clearHistoryBtn.addEventListener(
-  "click",
-  localSto.clearHistory.bind(localSto)
-);
+refs.clearHistoryBtn.addEventListener("click", clearHistory);
+
+function clearHistory() {
+  localSto.clearHistory();
+  refs.historyList.textContent = "";
+}
+
+function updateHistory() {
+  if (localStorage.getItem("history") === null) {
+    return;
+  }
+
+  localStorage
+    .getItem("history")
+    .split(",")
+    .map((el) => {
+      const entry = document.createElement("div");
+      entry.textContent = `${el}`;
+      refs.historyList.appendChild(entry);
+    });
+}

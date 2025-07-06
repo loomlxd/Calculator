@@ -6,36 +6,14 @@ export default class LocalStorageActions {
     this.newHisElement = [];
   }
 
-  upDateHistory() {
-    if (localStorage.getItem("history") === null) {
-      return;
-    }
-
-    localStorage
-      .getItem("history")
-      .split(",")
-      .map((el) => {
-        const entry = document.createElement("div");
-        entry.textContent = `${el}`;
-        refs.historyList.appendChild(entry);
-      });
-  }
-
-  upDateLocalStorageHistory() {
+  updateLocalStorageHistory() {
     if (localStorage.getItem("history") === null) {
       return;
     }
     this.localStorageHistory = localStorage.getItem("history").split(",");
   }
 
-  upDateHistoryBlockNotAWholeNumber(total) {
-    this.newHisElement = [`${refs.display.textContent} = ${total.toFixed(2)}`];
-    this.localStorageHistory.push(
-      `${refs.display.textContent} = ${total.toFixed(2)}`
-    );
-    localStorage.setItem("history", this.localStorageHistory);
-  }
-  upDateHistoryBlockWholeNumber(total) {
+  updateHistoryBlockNumber(total) {
     this.newHisElement = [`${refs.display.textContent} = ${total}`];
     this.localStorageHistory.push(`${refs.display.textContent} = ${total}`);
     localStorage.setItem("history", this.localStorageHistory);
@@ -44,6 +22,5 @@ export default class LocalStorageActions {
   clearHistory() {
     localStorage.removeItem("history");
     this.localStorageHistory = [];
-    refs.historyList.innerHTML = "";
   }
 }
