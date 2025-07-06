@@ -3,52 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <title>Calculate</title>
+    <title>Calculator</title>
   </head>
   <body>
     <div class="app">
-      <div class="display"></div>
+      <div class="display" id="display"></div>
       <div class="other-btns">
-        <div class="clear-btn">C</div>
-        <div class="back-btn">
-          <img src="./image/left-arrow.png" alt="" class="arrow" />
-        </div>
+        <button class="clear-btn" id="clear-btn">C</button>
+        <button class="back-btn" id="back-btn">
+          <img src="./image/left-arrow.svg" alt="Delete" class="arrow" />
+        </button>
       </div>
       <div class="buttons">
-        <div class="keypads">
-          <ul class="left-numbers">
-            <li class="number number9">7</li>
-            <li class="number number8">8</li>
-            <li class="number number7">9</li>
-            <li class="number number6">4</li>
-            <li class="number number5">5</li>
-            <li class="number number4">6</li>
-            <li class="number number3">1</li>
-            <li class="number number2">2</li>
-            <li class="number number1">3</li>
-            <li class="number number0">0</li>
-            <li class="number dote">.</li>
-          </ul>
-          <ul class="right-sym">
-            <li class="sym multiply">X</li>
-            <li class="sym divide">/</li>
-            <li class="sym plus">+</li>
-            <li class="sym minus">-</li>
-            <li class="equals">=</li>
-          </ul>
+        <div class="keypads" id="keypads">
+          <div class="left-numbers">
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+            <button class="number">0</button>
+            <button class="number dote">.</button>
+          </div>
+          <div class="right-sym">
+            <button class="sym multiply">X</button>
+            <button class="sym divide">/</button>
+            <button class="sym plus">+</button>
+            <button class="sym minus">-</button>
+            <button class="equals" id="equals">=</button>
+          </div>
         </div>
       </div>
     </div>
     <div class="history">
-      <div class="history-block">
-        <button class="clear-history-btn" type="button">clear</button>
-        <div class="history-list"></div>
+      <div class="history-block" id="history-block">
+        <button class="clear-history-btn" type="button" id="clear-history-btn">
+          clear
+        </button>
+        <div class="history-list" id="history-list"></div>
       </div>
-      <img src="./image/right-arrow.png" alt="" class="open-history" />
+      <img
+        src="./image/right-arrow.svg"
+        alt="Open History"
+        class="open-history"
+        id="open-history"
+      />
     </div>
     <script type="module" src="app.js"></script>
   </body>

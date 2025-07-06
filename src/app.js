@@ -1,30 +1,33 @@
 import "./style.css";
 import refs from "./refs";
+import "./reset.css";
+import LocalStorageActions from "./localStorage";
 
-let firstNumber = 0;
-let secondNumber = 0;
-let symbol = null;
-let total = 0;
-let dotCount = 0;
-let localStorageHistory = [];
+const localSto = new LocalStorageActions();
 
-if (localStorage.getItem("history") !== null) {
-  localStorageHistory = localStorage.getItem("history").split(",");
-}
+const state = {
+  firstNumber: "",
+  secondNumber: "",
+  symbol: null,
+  total: 0,
+  dotCount: 0,
+};
 
-upDateHistory();
+localSto.updateLocalStorageHistory();
+
+updateHistory();
 
 refs.keyPads.addEventListener("click", onKeyPadsClick);
 
 function onKeyPadsClick(e) {
-  if (e.target.tagName !== "LI") {
+  if (e.target.tagName !== "BUTTON") {
     return;
   }
 
   if (e.target.classList.contains("number")) {
     const number = e.target.textContent;
 
-    if (symbol === "/" && e.target.textContent === "0") {
+    if (state.symbol === "/" && e.target.textContent === "0") {
       return;
     }
     if (
@@ -33,34 +36,33 @@ function onKeyPadsClick(e) {
     ) {
       return;
     }
-    if (dotCount === 1 && e.target.textContent === ".") {
+    if (state.dotCount === 1 && e.target.textContent === ".") {
       return;
     }
     if (refs.display.textContent === "0" && e.target.textContent === "0") {
       return;
     }
-    if (secondNumber === "0" && e.target.textContent === "0") {
+    if (state.secondNumber === "0" && e.target.textContent === "0") {
       return;
     }
     if (
-      firstNumber.length > 0 &&
-      secondNumber === 0 &&
+      state.firstNumber.length > 0 &&
+      state.secondNumber === "" &&
       e.target.textContent === "."
     ) {
-      console.log("object :>> ");
       return;
     }
 
     if (e.target.textContent === ".") {
-      dotCount = 1;
+      state.dotCount = 1;
     }
 
     refs.display.textContent += number;
-    if (firstNumber !== 0 && symbol !== null) {
-      if (secondNumber === 0) {
-        secondNumber = number;
+    if (state.firstNumber !== 0 && state.symbol !== null) {
+      if (!state.secondNumber) {
+        state.secondNumber = number;
       } else {
-        secondNumber += number;
+        state.secondNumber += number;
       }
     }
   }
@@ -70,20 +72,20 @@ function onKeyPadsClick(e) {
       if (refs.display.textContent === " - ") {
         return;
       }
-      if (symbol === null) {
-        secondNumber = 0;
-        firstNumber = refs.display.textContent.split(" ")[0];
-        symbol = e.target.textContent;
-        refs.display.textContent = `${firstNumber} ${symbol} `;
+      if (state.symbol === null) {
+        state.secondNumber = "";
+        state.firstNumber = refs.display.textContent.split(" ")[0];
+        state.symbol = e.target.textContent;
+        refs.display.textContent = `${state.firstNumber} ${state.symbol} `;
       } else {
         calculateTotal();
-        secondNumber = 0;
-        firstNumber = refs.display.textContent.split(" ")[0];
-        symbol = e.target.textContent;
-        refs.display.textContent = `${firstNumber} ${symbol} `;
+        state.secondNumber = "";
+        state.firstNumber = refs.display.textContent.split(" ")[0];
+        state.symbol = e.target.textContent;
+        refs.display.textContent = `${state.firstNumber} ${state.symbol} `;
       }
     }
-    dotCount = 0;
+    state.dotCount = 0;
   }
 }
 
@@ -94,44 +96,42 @@ function onEqualsClick(e) {
 }
 
 function calculateTotal() {
-  if (secondNumber === 0 || symbol === null) {
+  if (!state.secondNumber || !state.symbol) {
     return;
   }
 
-  switch (symbol) {
+  switch (state.symbol) {
     case "X":
-      total = Number(firstNumber) * Number(secondNumber);
+      state.total = Number(state.firstNumber) * Number(state.secondNumber);
       break;
     case "/":
-      total = Number(firstNumber) / Number(secondNumber);
+      state.total = Number(state.firstNumber) / Number(state.secondNumber);
       break;
     case "+":
-      total = Number(firstNumber) + Number(secondNumber);
+      state.total = Number(state.firstNumber) + Number(state.secondNumber);
       break;
     case "-":
-      total = Number(firstNumber) - Number(secondNumber);
+      state.total = Number(state.firstNumber) - Number(state.secondNumber);
       break;
   }
 
-  if (String(total).includes(".")) {
-    localStorageHistory.push(
-      `${refs.display.textContent} = ${total.toFixed(2)}<br>`
-    );
-    localStorage.setItem("history", localStorageHistory);
-
-    refs.display.textContent = total.toFixed(2);
+  if (String(state.total).includes(".")) {
+    localSto.updateHistoryBlockNumber(state.total.toFixed(2));
+    refs.display.textContent = state.total.toFixed(2);
   } else {
-    localStorageHistory.push(`${refs.display.textContent} = ${total}<br>`);
-    localStorage.setItem("history", localStorageHistory);
-
-    refs.display.textContent = total;
+    localSto.updateHistoryBlockNumber(state.total);
+    refs.display.textContent = state.total;
   }
 
-  upDateHistory();
+  localSto.newHisElement.map((el) => {
+    const entry = document.createElement("div");
+    entry.textContent = `${el}`;
+    refs.historyList.appendChild(entry);
+  });
 
-  secondNumber = 0;
-  firstNumber = 0;
-  symbol = null;
+  state.secondNumber = "";
+  state.firstNumber = "";
+  state.symbol = null;
 }
 
 refs.clearBtn.addEventListener("click", onClearBtnClick);
@@ -141,12 +141,12 @@ function onClearBtnClick(e) {
   setTimeout(() => {
     e.target.classList.remove("click");
   }, 200);
-  firstNumber = 0;
-  secondNumber = 0;
-  symbol = null;
-  total = 0;
+  state.firstNumber = "";
+  state.secondNumber = "";
+  state.symbol = null;
+  state.total = 0;
   refs.display.textContent = "";
-  dotCount = 0;
+  state.dotCount = 0;
 }
 
 refs.backBtn.addEventListener("click", onBackBtnClick);
@@ -168,13 +168,13 @@ function onBackBtnClick(e) {
   }
 
   if (text.slice(-1) === ".") {
-    dotCount = 0;
+    state.dotCount = 0;
   }
 
-  secondNumber = String(secondNumber).slice(0, -1);
+  state.secondNumber = String(state.secondNumber).slice(0, -1);
 
   if (!isNaN(Number(refs.display.textContent))) {
-    symbol = null;
+    state.symbol = null;
   }
 }
 
@@ -185,21 +185,24 @@ function onOpenHistoryBtnClick(e) {
   refs.historyBlock.classList.toggle("active");
 }
 
-function upDateHistory() {
+refs.clearHistoryBtn.addEventListener("click", clearHistory);
+
+function clearHistory() {
+  localSto.clearHistory();
+  refs.historyList.textContent = "";
+}
+
+function updateHistory() {
   if (localStorage.getItem("history") === null) {
     return;
   }
 
-  refs.historyList.innerHTML = localStorage
+  localStorage
     .getItem("history")
     .split(",")
-    .join("");
-}
-
-refs.clearHistoryBtn.addEventListener("click", onClearHistoryBtnClick);
-
-function onClearHistoryBtnClick(e) {
-  localStorage.removeItem("history");
-  localStorageHistory = [];
-  refs.historyList.innerHTML = "";
+    .map((el) => {
+      const entry = document.createElement("div");
+      entry.textContent = `${el}`;
+      refs.historyList.appendChild(entry);
+    });
 }
