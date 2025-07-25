@@ -6,16 +6,13 @@
   --background-site-color: #dddddd;
 }
 
-button,
-.number,
-.sym {
+button {
+  color: black;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   user-select: none;
   outline: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  border: none;
 }
 
 body {
