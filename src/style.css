@@ -6,6 +6,11 @@
   --background-site-color: #dddddd;
 }
 
+button {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -280,7 +285,7 @@ body {
     align-items: center;
     background: none;
     gap: 30px;
-    margin-top: -20vh;
+    margin-top: -25vh;
   }
 
   .display {
@@ -289,7 +294,7 @@ body {
     height: 120px;
     max-height: 120px;
     border-radius: 20px;
-    margin-bottom: -2vh;
+    margin-bottom: -10vh;
   }
 
   .keypads {
