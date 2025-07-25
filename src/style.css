@@ -265,3 +265,107 @@ body {
 .open-history.active {
   transform: rotate(180deg);
 }
+
+@media (max-width: 420px) {
+  body {
+    background: var(--gray-color);
+    overflow: hidden;
+  }
+
+  .app {
+    display: flex;
+    max-width: 375px;
+    max-height: 700px;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    gap: 30px;
+    margin-top: -20vh;
+  }
+
+  .display {
+    font-size: 50px;
+    width: 85%;
+    height: 120px;
+    max-height: 120px;
+    border-radius: 20px;
+    margin-bottom: -2vh;
+  }
+
+  .keypads {
+    gap: 10px;
+  }
+
+  .left-numbers {
+    grid-template-columns: repeat(3, 65px);
+    grid-auto-rows: 65px;
+    gap: 6px;
+  }
+
+  .right-sym {
+    grid-template-columns: repeat(2, 65px);
+    grid-auto-rows: 65px;
+    gap: 6px;
+  }
+
+  .number,
+  .sym {
+    width: 85%;
+    height: 85%;
+    border: none;
+    margin-left: 3px;
+  }
+
+  .equals {
+    width: 126px;
+    margin-left: 3px;
+  }
+
+  .other-btns {
+    width: 100%;
+  }
+
+  .back-btn,
+  .clear-btn {
+    width: 8vh;
+  }
+
+  .open-history {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+    transform: rotate(90deg);
+    margin-left: 5px;
+    margin-right: 2vh;
+  }
+
+  .open-history.active {
+    transform: rotate(-90deg);
+  }
+
+  .history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    margin-left: 2vh;
+    top: 75vh;
+  }
+
+  .history-block {
+    margin-right: 2vh;
+  }
+
+  .history-block.active {
+    width: 350px;
+    height: 150px;
+    max-height: 200px;
+    opacity: 1;
+    visibility: visible;
+    overflow: auto;
+  }
+
+  .buttons {
+    margin-left: 5px;
+  }
+}
