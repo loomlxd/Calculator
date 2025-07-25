@@ -6,9 +6,16 @@
   --background-site-color: #dddddd;
 }
 
-button {
+button,
+.number,
+.sym {
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
   user-select: none;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 body {
@@ -285,7 +292,9 @@ body {
     align-items: center;
     background: none;
     gap: 30px;
-    margin-top: -25vh;
+    position: absolute;
+    top: 0;
+    padding: 0px;
   }
 
   .display {
@@ -294,7 +303,7 @@ body {
     height: 120px;
     max-height: 120px;
     border-radius: 20px;
-    margin-bottom: -10vh;
+    margin-bottom: -8vh;
   }
 
   .keypads {
@@ -354,7 +363,7 @@ body {
     align-items: center;
     position: absolute;
     margin-left: 2vh;
-    top: 75vh;
+    bottom: 0;
   }
 
   .history-block {
